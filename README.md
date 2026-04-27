@@ -1,8 +1,16 @@
-# cups_tailwind
+<p align="center">
+  <img src="cups_tailwind.png" alt="cups_tailwind logo" width="200">
+</p>
 
-Modernized CUPS web UI. Tailwind v4, dark-mode aware, themeable, touch-friendly.
-Drop-in replacement for the contents of `/usr/share/cups/templates/` and
-`/usr/share/cups/doc-root/` on a host running CUPS.
+<h1 align="center">cups_tailwind</h1>
+
+<p align="center">
+  Modernized CUPS web UI. Tailwind v4, dark-mode aware, themeable, touch-friendly.<br>
+  Drop-in replacement for <code>/usr/share/cups/templates/</code> and
+  <code>/usr/share/cups/doc-root/</code> on a host running CUPS.
+</p>
+
+---
 
 ## Features
 
