@@ -66,5 +66,5 @@ Project structure and the "drop-in template replacement" approach come from
 [Joakim Ewenson's cups_bootstrapped](https://github.com/JoakimEwenson/cups_bootstrapped).
 Templates here were re-authored from scratch, not ported.
 
-[Unreleased]: https://github.com/OWNER/cups_tailwind/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/OWNER/cups_tailwind/releases/tag/v0.1.0
+[Unreleased]: https://github.com/EEParker/cups_tailwind/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/EEParker/cups_tailwind/releases/tag/v0.1.0

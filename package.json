@@ -6,10 +6,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OWNER/cups_tailwind.git"
+    "url": "https://github.com/EEParker/cups_tailwind.git"
   },
-  "homepage": "https://github.com/OWNER/cups_tailwind",
-  "bugs": "https://github.com/OWNER/cups_tailwind/issues",
+  "homepage": "https://github.com/EEParker/cups_tailwind",
+  "bugs": "https://github.com/EEParker/cups_tailwind/issues",
   "scripts": {
     "build": "bun run build:css && bun run build:js",
     "build:css": "bunx @tailwindcss/cli -i src/input.css -o doc-root/cups.css --minify",

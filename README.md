@@ -25,7 +25,7 @@
 
 ```bash
 # On the CUPS host:
-curl -sSL https://github.com/<owner>/cups_tailwind/releases/latest/download/cups_tailwind.tar.gz | tar -xz
+curl -sSL https://github.com/EEParker/cups_tailwind/releases/latest/download/cups_tailwind.tar.gz | tar -xz
 cd cups_tailwind
 sudo bash install.sh
 ```
@@ -66,7 +66,7 @@ does on the host.
 ### Manual (clone + build)
 
 ```bash
-git clone https://github.com/<owner>/cups_tailwind.git
+git clone https://github.com/EEParker/cups_tailwind.git
 cd cups_tailwind
 bun install            # or: npm install
 bun run build          # compiles doc-root/cups.css
