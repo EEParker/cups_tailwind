@@ -1,0 +1,28 @@
+<h2 class="text-base font-semibold mb-4">{op=modify-printer?Modify {printer_name}:Add printer}</h2>
+
+<form method="POST" action="/admin" class="card p-6 max-w-2xl space-y-4">
+  <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+  <input type="hidden" name="OP" value="{op}">
+  {printer_name?<input type="hidden" name="printer_name" value="{printer_name}">:}
+  <input type="hidden" name="CURRENT_MAKE_AND_MODEL" value="{?current_make_and_model}">
+
+  <div>
+    <label class="block text-sm font-medium mb-1">Connection URI</label>
+    <input type="url" maxlength="1023" name="DEVICE_URI" value="{current_device_uri?{current_device_uri}:{device_uri}}" class="w-full font-mono text-sm">
+  </div>
+
+  <div class="rounded-md p-4 text-xs font-mono bg-(--color-surface-2) border border-(--color-border) text-(--color-fg-muted)">
+    Examples:<br>
+    &nbsp;&nbsp;http://hostname:631/ipp/<br>
+    &nbsp;&nbsp;http://hostname:631/ipp/port1<br>
+    &nbsp;&nbsp;ipp://hostname/ipp/<br>
+    &nbsp;&nbsp;ipp://hostname/ipp/port1<br>
+    &nbsp;&nbsp;lpd://hostname/queue<br>
+    &nbsp;&nbsp;socket://hostname<br>
+    &nbsp;&nbsp;socket://hostname:9100
+  </div>
+
+  <p class="text-xs text-(--color-fg-subtle)">See <a href="/help/network.html" target="_blank">"Network Printers"</a> for the correct URI to use with your printer.</p>
+
+  <div><input type="submit" class="btn btn-primary" value="Continue"></div>
+</form>

@@ -1,0 +1,21 @@
+<h2 class="text-base font-semibold mb-4">Available printers</h2>
+{#device_uri=0?
+<div class="card p-6 text-sm text-(--color-fg-muted)">No printers found.</div>:
+<div class="card divide-y border-(--color-border)">
+  {[device_uri]
+  <div class="flex items-center justify-between gap-4 p-4">
+    <div>
+      <div class="font-medium">{device_make_and_model}</div>
+      <div class="text-xs text-(--color-fg-subtle)">{device_info}</div>
+    </div>
+    <form action="/admin/" method="POST">
+      <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+      <input type="hidden" name="OP" value="add-printer">
+      <input type="hidden" name="TEMPLATE_NAME" value="{template_name}">
+      <input type="hidden" name="PRINTER_LOCATION" value="Local Printer">
+      <input type="hidden" name="PRINTER_INFO" value="{device_make_and_model}">
+      <input type="hidden" name="DEVICE_URI" value="{device_uri}">
+      <input type="submit" class="btn btn-primary" value="Add">
+    </form>
+  </div>}
+</div>}

@@ -1,0 +1,94 @@
+{#job_id=0?
+<div class="card p-8 text-center">
+  <div class="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-(--color-surface-2) text-(--color-fg-muted)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+  </div>
+  <div class="text-base font-medium">No jobs in queue</div>
+  <div class="mt-1 text-sm text-(--color-fg-muted)">Print something — it'll show up here.</div>
+</div>:
+<div class="card overflow-x-auto">
+  <table class="table-clean" summary="Job List">
+    <thead>
+      <tr>
+        <th>Printer</th>
+        <th class="hidden sm:table-cell">ID</th>
+        <th>Name</th>
+        <th class="hidden md:table-cell">User</th>
+        <th class="hidden lg:table-cell">Size</th>
+        <th class="hidden lg:table-cell">Pages</th>
+        <th>State</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {[job_id]
+      <tr class="align-top">
+        <td><a href="{?job_printer_uri}" class="font-medium">{?job_printer_name}</a></td>
+        <td class="hidden sm:table-cell text-(--color-fg-muted)">{?job_id}</td>
+        <td>{?job_name=?Unknown:{job_name}}</td>
+        <td class="hidden md:table-cell text-(--color-fg-muted)">{?job_originating_user_name=?Withheld:{job_originating_user_name}}</td>
+        <td class="hidden lg:table-cell text-(--color-fg-muted)">{job_k_octets}k</td>
+        <td class="hidden lg:table-cell text-(--color-fg-muted)">{job_impressions_completed=0?—:{?job_impressions_completed}}</td>
+        <td>
+          {job_state=3?<span class="pill pill-info">Pending</span>:}
+          {job_state=4?<span class="pill pill-warning">Held</span>:}
+          {job_state=5?<span class="pill pill-info">Processing</span>:}
+          {job_state=6?<span class="pill pill-warning">Stopped</span>:}
+          {job_state=7?<span class="pill pill-neutral">Canceled</span>:}
+          {job_state=8?<span class="pill pill-danger">Aborted</span>:}
+          {job_state=9?<span class="pill pill-success">Completed</span>:}
+          <div class="text-xs mt-1 text-(--color-fg-subtle)">
+            {job_state=3?since {?time_at_creation=?Unknown:{time_at_creation}}:}
+            {job_state=4?since {?time_at_creation=?Unknown:{time_at_creation}}:}
+            {job_state=5?since {?time_at_processing=?Unknown:{time_at_processing}}:}
+            {job_state=7?at {?time_at_completed=?Unknown:{time_at_completed}}:}
+            {job_state=9?at {?time_at_completed=?Unknown:{time_at_completed}}:}
+          </div>
+          {job_printer_state_message?<div class="text-xs mt-1 italic text-(--color-fg-subtle)">"{job_printer_state_message}"</div>:}
+        </td>
+        <td class="text-right">
+          <div class="inline-flex flex-wrap gap-1.5 justify-end">
+            {job_preserved>0?{job_state>5?
+            <form action="/jobs/" method="POST" class="inline">
+              <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+              <input type="hidden" name="OP" value="restart-job">
+              <input type="hidden" name="job_id" value="{job_id}">
+              <input type="hidden" name="job_printer_uri" value="{job_printer_uri}">
+              <input type="submit" class="btn btn-ghost" value="Reprint">
+            </form>:}:}
+            {job_state=4?
+            <form action="/jobs/" method="POST" class="inline">
+              <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+              <input type="hidden" name="OP" value="release-job">
+              <input type="hidden" name="job_id" value="{job_id}">
+              <input type="hidden" name="job_printer_uri" value="{job_printer_uri}">
+              <input type="submit" class="btn btn-ghost" value="Release">
+            </form>:}
+            {job_state=3?
+            <form action="/jobs/" method="POST" class="inline">
+              <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+              <input type="hidden" name="OP" value="hold-job">
+              <input type="hidden" name="job_id" value="{job_id}">
+              <input type="hidden" name="job_printer_uri" value="{job_printer_uri}">
+              <input type="submit" class="btn btn-ghost" value="Hold">
+            </form>:}
+            {job_state<7?
+            <form action="/jobs/" method="POST" class="inline">
+              <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+              <input type="hidden" name="OP" value="cancel-job">
+              <input type="hidden" name="job_id" value="{job_id}">
+              <input type="hidden" name="job_printer_uri" value="{job_printer_uri}">
+              <input type="submit" class="btn btn-danger" value="Cancel">
+            </form>
+            <form action="/jobs/" method="POST" class="inline">
+              <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+              <input type="hidden" name="OP" value="move-job">
+              <input type="hidden" name="job_id" value="{job_id}">
+              <input type="submit" class="btn btn-ghost" value="Move">
+            </form>:}
+          </div>
+        </td>
+      </tr>}
+    </tbody>
+  </table>
+</div>}

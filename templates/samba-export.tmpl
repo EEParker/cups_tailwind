@@ -1,0 +1,46 @@
+<script>
+  function select_printers() {
+    var list = document.export_samba.EXPORT_NAME;
+    var sel = document.export_samba.EXPORT_ALL.checked;
+    for (var i = 0; i < list.length; i++) list.options[i].selected = sel;
+  }
+</script>
+
+<div class="card p-6 max-w-2xl">
+  <h2 class="text-base font-semibold mb-4">Export printers to Samba</h2>
+
+  {error?
+  <div class="alert alert-danger mb-4">
+    <div>
+      <div class="font-medium">Unable to export printers to Samba</div>
+      <pre class="mt-2 text-xs whitespace-pre-wrap">{error}</pre>
+      <p class="mt-2 text-xs">See the <a href="/admin/log/error_log" target="_blank">error_log</a> for more.</p>
+    </div>
+  </div>:
+  <p class="text-sm mb-4 text-(--color-fg-muted)">Export printers to Samba so Windows clients can access them through Network Neighborhood. Install Windows PostScript drivers first — see <a href="/help/man-cupsaddsmb.html" target="_blank">cupsaddsmb(8)</a>.</p>}
+
+  <form method="POST" action="/admin/" name="export_samba" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="export-samba">
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Printers</label>
+      <select name="EXPORT_NAME" size="10" multiple class="w-full">
+        {[printer_name]<option value="{printer_name}"{export_all? selected:{printer_export? selected:}}>{printer_name}}
+      </select>
+      <label class="flex items-center gap-2 mt-2 text-sm">
+        <input type="checkbox" name="EXPORT_ALL"{export_all? checked:} onchange="select_printers()">
+        Export all printers
+      </label>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Samba username</label>
+      <input type="text" name="USERNAME" value="{?USERNAME}" class="w-full">
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Samba password</label>
+      <input type="password" name="PASSWORD" value="" class="w-full">
+    </div>
+    <div class="pt-2"><input type="submit" class="btn btn-primary" value="Export to Samba"></div>
+  </form>
+</div>

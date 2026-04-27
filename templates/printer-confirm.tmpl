@@ -1,0 +1,12 @@
+<div class="card p-6 max-w-xl">
+  <h2 class="text-base font-semibold mb-3">Delete printer <span class="font-mono">{printer_name}</span></h2>
+  <div class="alert alert-danger mb-5">
+    <div><strong>Warning:</strong> Are you sure you want to delete printer <span class="font-mono">{printer_name}</span>?</div>
+  </div>
+  <form action="/admin/" method="POST">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="delete-printer">
+    <input type="hidden" name="printer_name" value="{printer_name}">
+    <input type="submit" class="btn btn-danger" name="confirm" value="Delete printer">
+  </form>
+</div>

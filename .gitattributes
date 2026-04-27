@@ -1,0 +1,14 @@
+* text=auto eol=lf
+
+*.sh       text eol=lf
+*.bash     text eol=lf
+Makefile   text eol=lf
+*.yml      text eol=lf
+*.yaml     text eol=lf
+
+*.png      binary
+*.jpg      binary
+*.gif      binary
+*.ico      binary
+*.woff     binary
+*.woff2    binary

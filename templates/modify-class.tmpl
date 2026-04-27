@@ -1,0 +1,24 @@
+<div class="card p-6 max-w-2xl">
+  <h2 class="text-base font-semibold mb-4">Modify class <span class="font-mono">{printer_name}</span></h2>
+  <form method="POST" action="/admin" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="{op}">
+    <input type="hidden" name="PRINTER_NAME" value="{printer_name}">
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Description</label>
+      <input type="text" name="PRINTER_INFO" value="{?printer_info}" maxlength="127" class="w-full">
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Location</label>
+      <input type="text" name="PRINTER_LOCATION" value="{?printer_location}" maxlength="127" class="w-full">
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Members</label>
+      <select name="MEMBER_URIS" size="10" multiple class="w-full">
+        {[member_uris]<option value="{member_uris}" {?member_selected}>{member_names}}
+      </select>
+    </div>
+    <div class="pt-2"><input type="submit" class="btn btn-primary" value="Modify class"></div>
+  </form>
+</div>

@@ -1,0 +1,65 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build CSS
+        run: bunx @tailwindcss/cli -i src/input.css -o doc-root/cups.css --minify
+
+      - name: Build editor bundle
+        run: bun build src/cupsdconf-editor.js --outfile doc-root/cupsdconf-editor.js --minify --format=iife --target=browser
+
+      - name: Stage release tree
+        run: |
+          mkdir -p dist/cups_tailwind
+          cp -r templates    dist/cups_tailwind/
+          cp -r doc-root     dist/cups_tailwind/
+          cp install.sh      dist/cups_tailwind/
+          cp uninstall.sh    dist/cups_tailwind/
+          cp README.md       dist/cups_tailwind/
+          cp LICENSE         dist/cups_tailwind/ 2>/dev/null || true
+          chmod +x dist/cups_tailwind/install.sh dist/cups_tailwind/uninstall.sh
+
+      - name: Tarball
+        id: tarball
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          [ -z "$VERSION" ] && VERSION="$(date -u +%Y%m%d-%H%M%S)"
+          NAME="cups_tailwind-${VERSION}.tar.gz"
+          tar -czf "dist/${NAME}" -C dist cups_tailwind
+          echo "name=${NAME}"  >> "$GITHUB_OUTPUT"
+          echo "path=dist/${NAME}" >> "$GITHUB_OUTPUT"
+          ls -la dist/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.tarball.outputs.name }}
+          path: ${{ steps.tarball.outputs.path }}
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.tarball.outputs.path }}
+          generate_release_notes: true

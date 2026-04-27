@@ -1,0 +1,21 @@
+<script>
+  function reset_config() {
+    var v = "{?cupsdconf_default}";
+    document.cups.CUPSDCONF.value = v;
+    if (window.__cupsdEditor) window.__cupsdEditor.setValue(v);
+  }
+</script>
+
+<div class="card p-6">
+  <h2 class="text-base font-semibold mb-4">Edit cupsd.conf</h2>
+  <form name="cups" method="POST" action="/admin/" class="space-y-3">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="config-server">
+    <textarea name="CUPSDCONF" rows="25" class="w-full font-mono text-xs">{CUPSDCONF}</textarea>
+    <div class="flex flex-wrap gap-2">
+      <input type="submit" class="btn btn-primary" name="SAVECHANGES" value="Save changes">
+      <input type="button" class="btn btn-ghost" value="Use default configuration" onclick="reset_config();">
+    </div>
+  </form>
+</div>
+<script src="/cupsdconf-editor.js" defer></script>

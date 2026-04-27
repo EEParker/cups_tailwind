@@ -1,0 +1,10 @@
+<form action="/{SECTION}/{?SEARCH_DEST}" method="GET" class="card p-4 mb-4 flex flex-wrap items-end gap-2">
+  {WHICH_JOBS?<input type="hidden" name="WHICH_JOBS" value="{WHICH_JOBS}">:}
+  {ORDER?<input type="hidden" name="ORDER" value="{ORDER}">:}
+  <div class="flex-1 min-w-[16rem]">
+    <label class="block text-xs font-medium uppercase tracking-wide mb-1 text-(--color-fg-muted)">Search in {SEARCH_DEST?{SEARCH_DEST}:{SECTION=classes?Classes:{SECTION=jobs?Jobs:Printers}}}</label>
+    <input type="search" name="QUERY" value="{?QUERY}" class="w-full" autosave="org.cups.{SECTION}" results="20">
+  </div>
+  <input type="submit" class="btn btn-primary" value="Search">
+  <input type="submit" class="btn btn-ghost" name="CLEAR" value="Clear">
+</form>

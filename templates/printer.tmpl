@@ -1,0 +1,65 @@
+<div class="space-y-5">
+  <div>
+    <div class="text-xs uppercase tracking-wide text-(--color-fg-muted)">Printer</div>
+    <h2 class="text-xl font-semibold mt-1"><a href="{printer_uri_supported}">{printer_name}</a></h2>
+    <div class="mt-2 flex flex-wrap items-center gap-2 text-sm">
+      {printer_state=3?<span class="pill pill-success">Idle</span>:}
+      {printer_state=4?<span class="pill pill-info">Processing</span>:}
+      {printer_state=5?<span class="pill pill-warning">Paused</span>:}
+      {printer_is_accepting_jobs=0?<span class="pill pill-danger">Rejecting jobs</span>:<span class="pill pill-neutral">Accepting jobs</span>}
+      {server_is_sharing_printers=0?<span class="pill pill-neutral">Not shared</span>:{printer_is_shared=0?<span class="pill pill-neutral">Not shared</span>:<span class="pill pill-info">Shared</span>}}
+      {default_name={printer_name}?<span class="pill pill-success">Server default</span>:}
+    </div>
+  </div>
+
+  <div class="card p-4 flex flex-wrap gap-3 items-end">
+    <form method="POST" action="{printer_uri_supported}" name="maintenance" class="flex flex-col gap-1">
+      <span class="text-xs font-medium uppercase tracking-wide text-(--color-fg-muted)">Maintenance</span>
+      <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+      <select name="OP" onchange="document.maintenance.submit();">
+        <option value="">Choose action…</option>
+        <option value="print-test-page">Print test page</option>
+        {printer_commands~.*Clean.*?<option value="clean-print-heads">Clean print heads</option>:}
+        {printer_commands~.*PrintSelfTestPage.*?<option value="print-self-test-page">Print self-test page</option>:}
+        {printer_state=5?<option value="start-printer">Resume printer</option>:<option value="stop-printer">Pause printer</option>}
+        {printer_is_accepting_jobs=0?<option value="accept-jobs">Accept jobs</option>:<option value="reject-jobs">Reject jobs</option>}
+        <option value="move-jobs">Move all jobs</option>
+        <option value="cancel-jobs">Cancel all jobs</option>
+      </select>
+      <noscript><button type="submit" class="btn btn-ghost mt-1">Go</button></noscript>
+    </form>
+    <form method="POST" action="{admin_uri}" name="administration" class="flex flex-col gap-1">
+      <span class="text-xs font-medium uppercase tracking-wide text-(--color-fg-muted)">Administration</span>
+      <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+      <input type="hidden" name="printer_name" value="{printer_name}">
+      <select name="OP" onchange="document.administration.submit();">
+        <option value="">Choose action…</option>
+        <option value="modify-printer">Modify printer</option>
+        <option value="delete-printer">Delete printer</option>
+        <option value="set-printer-options">Set default options</option>
+        <option value="set-as-default">Set as server default</option>
+        <option value="set-allowed-users">Set allowed users</option>
+      </select>
+      <noscript><button type="submit" class="btn btn-ghost mt-1">Go</button></noscript>
+    </form>
+  </div>
+
+  <div class="card overflow-hidden">
+    <table class="table-clean" summary="{printer_name}">
+      <tbody>
+        <tr><th class="w-40">Description</th><td>{printer_info}</td></tr>
+        <tr><th>Location</th><td>{printer_location}</td></tr>
+        <tr><th>Driver</th><td>{printer_make_and_model} <span class="text-(--color-fg-subtle)">({color_supported=1?color:grayscale}{sides_supported=one-sided?:, 2-sided printing})</span></td></tr>
+        <tr><th>Connection</th><td class="font-mono text-xs break-all">{device_uri}</td></tr>
+        <tr>
+          <th>Defaults</th>
+          <td class="font-mono text-xs">
+            job-sheets={job_sheets_default}
+            media={media_default?{media_default}:unknown}
+            {sides_default?sides={sides_default}:}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

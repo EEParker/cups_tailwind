@@ -1,0 +1,32 @@
+<div class="card p-6 max-w-2xl">
+  <h2 class="text-base font-semibold mb-4">Add class</h2>
+  <form method="POST" action="/admin" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="{op}">
+
+    <div>
+      <label for="PRINTER_NAME" class="block text-sm font-medium mb-1">Name</label>
+      <input type="text" id="PRINTER_NAME" name="PRINTER_NAME" maxlength="127" class="w-full">
+      <p class="text-xs mt-1 text-(--color-fg-subtle)">Any printable characters except <code>/</code>, <code>#</code>, and space.</p>
+    </div>
+    <div>
+      <label for="PRINTER_INFO" class="block text-sm font-medium mb-1">Description</label>
+      <input type="text" id="PRINTER_INFO" name="PRINTER_INFO" maxlength="127" class="w-full">
+      <p class="text-xs mt-1 text-(--color-fg-subtle)">Human-readable, e.g. "HP LaserJet with Duplexer".</p>
+    </div>
+    <div>
+      <label for="PRINTER_LOCATION" class="block text-sm font-medium mb-1">Location</label>
+      <input type="text" id="PRINTER_LOCATION" name="PRINTER_LOCATION" maxlength="127" class="w-full">
+      <p class="text-xs mt-1 text-(--color-fg-subtle)">Human-readable, e.g. "Lab 1".</p>
+    </div>
+    <div>
+      <label for="MEMBER_URIS" class="block text-sm font-medium mb-1">Members</label>
+      <select id="MEMBER_URIS" name="MEMBER_URIS" size="10" multiple class="w-full">
+        {[member_uris]<option value="{member_uris}" {?member_selected}>{member_names}}</option>
+      </select>
+    </div>
+    <div class="pt-2">
+      <input type="submit" class="btn btn-primary" value="Add class">
+    </div>
+  </form>
+</div>

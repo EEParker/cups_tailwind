@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="color-scheme" content="light dark">
+  {refresh_page?<meta http-equiv="refresh" content="{refresh_page}">:}
+  <link rel="icon" href="/apple-touch-icon.png" type="image/png">
+  <link rel="stylesheet" href="/cups.css">
+  <script src="/theme-switcher.js"></script>
+  <title>{title} — CUPS</title>
+  <style>html{visibility:hidden}</style>
+  <script>
+    if (self === top) document.documentElement.style.visibility = 'visible';
+    else top.location = self.location;
+    function check_cookies() {
+      if (!navigator.cookieEnabled) {
+        document.body.innerHTML = '<div class="card" style="margin:2rem;padding:1.5rem">This page uses cookies to prevent CSRF. Please enable cookies.</div>';
+      }
+    }
+  </script>
+</head>
+<body onload="check_cookies()">
+  <header class="sticky top-0 z-40 backdrop-blur" style="background:color-mix(in oklch, var(--color-bg) 80%, transparent);border-bottom:1px solid var(--color-border)">
+    <div class="mx-auto max-w-6xl px-4 h-14 flex items-center gap-2">
+      <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-(--color-fg)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-(--color-accent)"><path d="M6 9V2h12v7"/><rect x="2" y="9" width="20" height="9" rx="2"/><path d="M6 14h12v8H6z"/></svg>
+        CUPS
+      </a>
+      <nav class="ml-2 flex items-center gap-1 overflow-x-auto" style="scrollbar-width:none">
+        <a href="/admin"    class="nav-link {SECTION=admin?active:}">Admin</a>
+        <a href="/classes/" class="nav-link {SECTION=classes?active:}">Classes</a>
+        <a href="/jobs/"    class="nav-link {SECTION=jobs?active:}">Jobs</a>
+        <a href="/printers/" class="nav-link {SECTION=printers?active:}">Printers</a>
+        <a href="/help/"    class="nav-link {SECTION=help?active:}">Help</a>
+      </nav>
+      <div class="ml-auto flex items-center gap-2 text-sm text-(--color-fg-muted)">
+        <a href="/themes.html" class="nav-link" title="Theme settings" aria-label="Theme settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main class="mx-auto max-w-6xl px-4 py-6">
+    <h1 class="text-2xl font-semibold tracking-tight mb-5">{title}</h1>

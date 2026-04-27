@@ -1,0 +1,17 @@
+<h2 class="text-base font-semibold mb-4">Default options for <span class="font-mono">{printer_name}</span></h2>
+
+<form method="POST" action="/admin" class="space-y-5">
+  <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+  <input type="hidden" name="PRINTER_NAME" value="{printer_name}">
+  <input type="hidden" name="OP" value="{op}">
+  {HAVE_AUTOCONFIGURE?<div><input type="submit" name="AUTOCONFIGURE" class="btn btn-ghost" value="Query printer for default options"></div>:}
+
+  <script>
+  function update_paramtable(option) {
+    var cb = document.getElementById("select-" + option);
+    var paramstable = document.getElementById(option + "-params");
+    paramstable.style.display = (cb.value === "Custom") ? "table" : "none";
+  }
+  </script>
+
+  {[group_id]

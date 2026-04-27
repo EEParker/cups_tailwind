@@ -1,0 +1,16 @@
+<div class="card p-6 max-w-xl">
+  <h2 class="text-base font-semibold mb-4">{job_id?Move job {job_id}:Move all jobs}</h2>
+  <form method="POST" action="/{SECTION}/{job_id?:{printer_name}}" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="{op}">
+    {job_id?<input type="hidden" name="JOB_ID" value="{job_id}">:}
+
+    <div>
+      <label class="block text-sm font-medium mb-1">New destination</label>
+      <select name="JOB_PRINTER_URI" size="10" class="w-full">
+        {[job_printer_uri]<option value="{job_printer_uri}">{job_printer_name}}
+      </select>
+    </div>
+    <div><input type="submit" class="btn btn-primary" value="{job_id?Move job:Move jobs}"></div>
+  </form>
+</div>

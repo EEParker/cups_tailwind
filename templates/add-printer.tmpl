@@ -1,0 +1,42 @@
+<div class="card p-6 max-w-2xl">
+  <h2 class="text-base font-semibold mb-4">Add printer</h2>
+  <form method="POST" action="/admin" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="{op}">
+    <input type="hidden" name="BAUDRATE" value="{?baudrate}">
+    <input type="hidden" name="BITS" value="{?bits}">
+    <input type="hidden" name="PARITY" value="{?parity}">
+    <input type="hidden" name="FLOW" value="{?flow}">
+    {?current_make!?<input type="hidden" name="CURRENT_MAKE" value="{current_make}">:}
+    {?current_make_and_model!?<input type="hidden" name="CURRENT_MAKE_AND_MODEL" value="{current_make_and_model}">:}
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Name</label>
+      <input type="text" name="PRINTER_NAME" maxlength="127" value="{?template_name}" class="w-full">
+      <p class="text-xs mt-1 text-(--color-fg-subtle)">Any printable characters except <code>/</code>, <code>#</code>, and space.</p>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Description</label>
+      <input type="text" name="PRINTER_INFO" maxlength="127" value="{?PRINTER_INFO}" class="w-full">
+      <p class="text-xs mt-1 text-(--color-fg-subtle)">Human-readable, e.g. "HP LaserJet with Duplexer".</p>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Location</label>
+      <input type="text" name="PRINTER_LOCATION" maxlength="127" value="{?PRINTER_LOCATION}" class="w-full">
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Connection</label>
+      <input type="hidden" name="DEVICE_URI" value="{device_uri}">
+      <div class="font-mono text-xs p-3 rounded-md break-all bg-(--color-surface-2) border border-(--color-border)">{device_uri}</div>
+    </div>
+    <div>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="PRINTER_IS_SHARED" name="PRINTER_IS_SHARED" {PRINTER_IS_SHARED=1?CHECKED:}>
+        Share this printer
+      </label>
+    </div>
+    <div class="pt-2">
+      <input type="submit" class="btn btn-primary" value="Continue">
+    </div>
+  </form>
+</div>

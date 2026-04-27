@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/apple-touch-icon.png" type="image/png">
+  <link rel="stylesheet" href="/cups.css">
+  <title>Themes — CUPS</title>
+  <script src="/theme-switcher.js"></script>
+</head>
+<body>
+  <header class="sticky top-0 z-40 backdrop-blur bg-(--color-bg) border-b border-(--color-border)">
+    <div class="mx-auto max-w-6xl px-4 h-14 flex items-center gap-2">
+      <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-(--color-fg)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-(--color-accent)"><path d="M6 9V2h12v7"/><rect x="2" y="9" width="20" height="9" rx="2"/><path d="M6 14h12v8H6z"/></svg>
+        CUPS
+      </a>
+      <nav class="ml-2 flex items-center gap-1 overflow-x-auto">
+        <a href="/admin"     class="nav-link">Admin</a>
+        <a href="/classes/"  class="nav-link">Classes</a>
+        <a href="/jobs/"     class="nav-link">Jobs</a>
+        <a href="/printers/" class="nav-link">Printers</a>
+        <a href="/help/"     class="nav-link">Help</a>
+        <a href="/themes.html" class="nav-link active">Themes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8">
+    <h1 class="text-2xl font-semibold tracking-tight mb-2">Theme</h1>
+    <p class="mb-8 max-w-prose text-(--color-fg-muted)">
+      Pick a primary color and border style. Changes save to your browser
+      and apply across CUPS pages on this device.
+    </p>
+
+    <section class="mb-10">
+      <h2 class="text-sm font-semibold uppercase tracking-wide mb-3 text-(--color-fg-muted)">Primary color</h2>
+      <div id="color-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-sm font-semibold uppercase tracking-wide mb-3 text-(--color-fg-muted)">Card hover border</h2>
+      <div id="border-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+    </section>
+
+    <section>
+      <h2 class="text-sm font-semibold uppercase tracking-wide mb-3 text-(--color-fg-muted)">Preview</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+        <a href="#" class="card p-5">
+          <div class="text-sm font-medium text-(--color-fg-muted)">Sample card</div>
+          <div class="mt-2 text-base font-semibold">Hover me to see the border</div>
+          <div class="mt-1 text-sm text-(--color-fg-subtle)">Try clicking another color above.</div>
+        </a>
+        <div class="card p-5">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="button" class="btn btn-ghost">Ghost</button>
+            <button type="button" class="btn btn-danger">Danger</button>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="pill pill-success">Idle</span>
+            <span class="pill pill-info">Processing</span>
+            <span class="pill pill-warning">Stopped</span>
+            <span class="pill pill-danger">Aborted</span>
+            <span class="pill pill-neutral">Canceled</span>
+          </div>
+          <p class="text-sm">
+            Sample text with an
+            <a href="#preview">inline link</a>
+            to show the link color.
+          </p>
+        </div>
+      </div>
+      <button type="button" id="reset" class="btn btn-ghost">Reset to defaults</button>
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 py-8 mt-12 text-xs text-(--color-fg-subtle) border-t border-(--color-border)">
+    <a href="/">cups_tailwind</a> · theme settings are stored locally in your browser.
+  </footer>
+
+  <script>
+    (function () {
+      const { THEMES, BORDERS, getStored, setStored } = window.cupsTheme;
+
+      function swatch(id) {
+        const t = THEMES[id];
+        return `oklch(${t.accentL} ${t.accentC} ${t.hue})`;
+      }
+
+      function renderColors() {
+        const cur = getStored().theme;
+        const grid = document.getElementById("color-grid");
+        grid.innerHTML = Object.entries(THEMES).map(([id, t]) => `
+          <button type="button" data-theme="${id}" class="card p-4 text-left ${id === cur ? "ring-2" : ""}" style="${id === cur ? "border-color: var(--color-link)" : ""}">
+            <div class="flex items-center gap-3">
+              <span class="inline-block h-9 w-9 rounded-full" style="background:${swatch(id)};box-shadow: inset 0 0 0 1px color-mix(in oklch, ${swatch(id)} 50%, transparent)"></span>
+              <div>
+                <div class="font-medium">${t.name}</div>
+                <div class="text-xs text-(--color-fg-subtle)">${id === "dietpi" ? "default" : "preset"}</div>
+              </div>
+            </div>
+          </button>
+        `).join("");
+        grid.querySelectorAll("button[data-theme]").forEach(b => {
+          b.addEventListener("click", () => { setStored(b.dataset.theme, null); renderColors(); });
+        });
+      }
+
+      function renderBorders() {
+        const labels = {
+          gradient: "Gradient (green → amber)",
+          solid:    "Solid color",
+          minimal:  "Minimal / off",
+        };
+        const cur = getStored().border;
+        const grid = document.getElementById("border-grid");
+        grid.innerHTML = BORDERS.map(b => `
+          <button type="button" data-border="${b}" class="card p-4 text-left" style="${b === cur ? "border-color: var(--color-link)" : ""}">
+            <div class="font-medium">${labels[b]}</div>
+            <div class="text-xs mt-1 text-(--color-fg-subtle)">${b === "gradient" ? "Two-stop sweep on hover." : b === "solid" ? "Single primary-color border on hover." : "No border change on hover, background only."}</div>
+          </button>
+        `).join("");
+        grid.querySelectorAll("button[data-border]").forEach(b => {
+          b.addEventListener("click", () => { setStored(null, b.dataset.border); renderBorders(); });
+        });
+      }
+
+      document.getElementById("reset").addEventListener("click", () => {
+        localStorage.removeItem("cups-theme");
+        localStorage.removeItem("cups-border");
+        window.cupsTheme.apply();
+        renderColors();
+        renderBorders();
+      });
+
+      renderColors();
+      renderBorders();
+    })();
+  </script>
+</body>
+</html>

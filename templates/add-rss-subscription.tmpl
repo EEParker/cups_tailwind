@@ -1,0 +1,48 @@
+<div class="card p-6 max-w-3xl">
+  <h2 class="text-base font-semibold mb-4">Add RSS subscription</h2>
+  <form method="POST" action="/admin" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="add-rss-subscription">
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Name</label>
+      <input type="text" name="SUBSCRIPTION_NAME" maxlength="127" value="{?SUBSCRIPTION_NAME}" class="w-full">
+      <p class="text-xs mt-1 text-(--color-fg-subtle)">Any printable characters except space, <code>/</code>, <code>?</code>, and <code>#</code>.</p>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Queue</label>
+      <select name="PRINTER_URI" size="10" class="w-full">
+        <option value="#ALL#"{?PRINTER_URI=#ALL#? selected:}>All Queues</option>
+        {[printer_name]<option value="{printer_uri_supported}"{?PRINTER_URI={printer_uri_supported}? selected:}>{printer_name}</option>}
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-2">Events</label>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm">
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_JOB_CREATED" {?EVENT_JOB_CREATED}> Job created</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_PRINTER_STOPPED" {?EVENT_PRINTER_STOPPED}> Queue stopped</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_SERVER_STARTED" {?EVENT_SERVER_STARTED}> Server started</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_JOB_COMPLETED" {?EVENT_JOB_COMPLETED}> Job completed</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_PRINTER_ADDED" {?EVENT_PRINTER_ADDED}> Queue added</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_SERVER_STOPPED" {?EVENT_SERVER_STOPPED}> Server stopped</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_JOB_STOPPED" {?EVENT_JOB_STOPPED}> Job stopped</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_PRINTER_MODIFIED" {?EVENT_PRINTER_MODIFIED}> Queue modified</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_SERVER_RESTARTED" {?EVENT_SERVER_RESTARTED}> Server restarted</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_JOB_CONFIG_CHANGED" {?EVENT_JOB_CONFIG_CHANGED}> Job options changed</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_PRINTER_DELETED" {?EVENT_PRINTER_DELETED}> Queue deleted</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="EVENT_SERVER_AUDIT" {?EVENT_SERVER_AUDIT}> Server security audit</label>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Maximum events in feed</label>
+      <input type="number" name="MAX_EVENTS" maxlength="4" value="{MAX_EVENTS?{MAX_EVENTS}:20}" class="w-32">
+    </div>
+
+    <div class="pt-2">
+      <input type="submit" class="btn btn-primary" value="Add RSS subscription">
+    </div>
+  </form>
+</div>

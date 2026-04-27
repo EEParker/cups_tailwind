@@ -1,0 +1,41 @@
+<div class="grid grid-cols-1 lg:grid-cols-[1fr_18rem] gap-6">
+  <div>
+    <form action="/help/{?HELPFILE}" method="GET" class="card p-4 flex flex-wrap items-end gap-2 mb-5">
+      {TOPIC?<input type="hidden" name="TOPIC" value="{TOPIC}">:}
+      <div class="flex-1 min-w-[14rem]">
+        <label class="block text-xs font-medium uppercase tracking-wide mb-1 text-(--color-fg-muted)">Search in {HELPTITLE?{HELPTITLE}:{TOPIC?{TOPIC}:All Documents}}</label>
+        <input type="search" name="QUERY" value="{?QUERY}" class="w-full" autosave="org.cups.help" results="20">
+      </div>
+      <input type="submit" name="SEARCH" class="btn btn-primary" value="Search">
+      <input type="submit" name="CLEAR" class="btn btn-ghost" value="Clear">
+    </form>
+
+    {QUERY?
+    <p class="text-sm mb-2 text-(--color-fg-muted)">Search results in {HELPFILE?{HELPTITLE}:{TOPIC?{TOPIC}:All Documents}}&#58;</p>
+    {QTEXT?
+    <ul class="card divide-y border-(--color-border)">
+      {[QTEXT]<li class="p-3 text-sm"><a href="{QLINK}">{QTEXT}</a>{QPTEXT? <span class="text-(--color-fg-subtle)">in <em><a href="{QPLINK}">{QPTEXT}</a></em></span>:}</li>}
+    </ul>:
+    <div class="card p-4 text-sm text-(--color-fg-muted)">No matches found.</div>}
+    <hr class="my-5">:}
+
+    {HELPTITLE?
+    <form action="/help/{?HELPFILE}" method="GET" class="mb-5">
+      <input type="hidden" name="PRINTABLE" value="YES">
+      <input type="submit" class="btn btn-ghost" value="View printable version">
+    </form>:
+    <h1 class="text-2xl font-semibold tracking-tight mb-3">Online help</h1>
+    <p class="text-sm mb-3 text-(--color-fg-muted)">Enter search words above or click any documentation link.</p>
+    <p class="text-sm mb-3 text-(--color-fg-muted)">If you are new to CUPS, read the <a href="/help/overview.html">Overview of CUPS</a>.</p>
+    <p class="text-sm text-(--color-fg-muted)">The <a href="https://www.cups.org/" target="_blank">CUPS home page</a> has user forums, FAQs, and a bug tracker.</p>}
+  </div>
+
+  <aside class="card p-4 h-fit">
+    <h3 class="text-xs font-semibold uppercase tracking-wide mb-2 text-(--color-fg-muted)">Online help documents</h3>
+    <p class="text-sm"><a href="/help/{QUERY??QUERY={QUERY}:}">All documents</a></p>
+    <hr class="my-2">
+    <div class="space-y-1 text-sm">
+      {[BMTEXT]<p style="margin-left:calc(0.75rem * {BMINDENT})"><a href="{BMLINK}">{BMTEXT}</a></p>}
+    </div>
+  </aside>
+</div>

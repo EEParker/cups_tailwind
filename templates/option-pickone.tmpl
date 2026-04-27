@@ -1,0 +1,25 @@
+<tr>
+  <th class="{conflicted=1?text-[color:var(--color-danger)]:}"><a name="{keyword}">{keytext}</a></th>
+  <td>
+    <select class="w-full" name="{keyword}" id="select-{keyword}" onchange="update_paramtable('{keyword}')">
+      {[choices]<option {choices={defchoice-1}?selected:} value="{choices}">{text}}
+    </select>
+    {iscustom=1?
+    <table name="paramtable" id="{keyword}-params" class="mt-2 table-clean">
+      {[params]
+      <tr>
+        <th class="text-xs">{paramtext}</th>
+        <td>
+          {params=Units?<select class="w-full" name="{keyword-1}.{params}">
+            <option value="pt"{paramvalue=pt? selected:}>Points</option>
+            <option value="mm"{paramvalue=mm? selected:}>Millimeters</option>
+            <option value="cm"{paramvalue=cm? selected:}>Centimeters</option>
+            <option value="in"{paramvalue=in? selected:}>Inches</option>
+            <option value="ft"{paramvalue=ft? selected:}>Feet</option>
+            <option value="m"{paramvalue=m? selected:}>Meters</option>
+          </select>:<input type="{inputtype}" name="{keyword-1}.{params}" value="{paramvalue}" class="w-full">}
+        </td>
+      </tr>}
+    </table>:}
+  </td>
+</tr>

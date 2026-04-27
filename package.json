@@ -1,0 +1,33 @@
+{
+  "name": "cups-tailwind",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Modernized CUPS web UI: Tailwind v4, dark-mode aware, themeable, touch-friendly.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OWNER/cups_tailwind.git"
+  },
+  "homepage": "https://github.com/OWNER/cups_tailwind",
+  "bugs": "https://github.com/OWNER/cups_tailwind/issues",
+  "scripts": {
+    "build": "bun run build:css && bun run build:js",
+    "build:css": "bunx @tailwindcss/cli -i src/input.css -o doc-root/cups.css --minify",
+    "build:js": "bun build src/cupsdconf-editor.js --outfile doc-root/cupsdconf-editor.js --minify --format=iife --target=browser",
+    "dev": "bunx @tailwindcss/cli -i src/input.css -o doc-root/cups.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.10.3",
+    "@codemirror/language": "^6.12.3",
+    "@codemirror/legacy-modes": "^6.5.2",
+    "@codemirror/search": "^6.7.0",
+    "@codemirror/state": "^6.6.0",
+    "@codemirror/theme-one-dark": "^6.1.3",
+    "@codemirror/view": "^6.41.1",
+    "alpinejs": "^3.14.0",
+    "codemirror": "^6.0.2"
+  }
+}

@@ -1,0 +1,21 @@
+<div class="flex flex-wrap items-center gap-2 mb-4">
+  <div class="inline-flex p-1 rounded-lg bg-(--color-surface-2) border border-(--color-border)">
+    {?which_jobs=?<span class="px-3 py-1 rounded-md text-sm font-medium bg-(--color-surface) text-(--color-fg)">Active</span>:
+      <form action="{?printer_name=?/jobs:{printer_uri_supported}}" method="GET" class="inline">
+        <button type="submit" class="px-3 py-1 rounded-md text-sm text-(--color-fg-muted)">Active</button>
+      </form>}
+    {?which_jobs=completed?<span class="px-3 py-1 rounded-md text-sm font-medium bg-(--color-surface) text-(--color-fg)">Completed</span>:
+      <form action="{?printer_name=?/jobs:{printer_uri_supported}}" method="GET" class="inline">
+        <input type="hidden" name="which_jobs" value="completed">
+        <button type="submit" class="px-3 py-1 rounded-md text-sm text-(--color-fg-muted)">Completed</button>
+      </form>}
+    {?which_jobs=all?<span class="px-3 py-1 rounded-md text-sm font-medium bg-(--color-surface) text-(--color-fg)">All</span>:
+      <form action="{?printer_name=?/jobs:{printer_uri_supported}}" method="GET" class="inline">
+        <input type="hidden" name="which_jobs" value="all">
+        <button type="submit" class="px-3 py-1 rounded-md text-sm text-(--color-fg-muted)">All</button>
+      </form>}
+  </div>
+  <p class="text-xs ml-auto text-(--color-fg-subtle)">
+    {?which_jobs=?Print order, held first.:{which_jobs=Jobs listed in ascending order.?:Descending order.}}
+  </p>
+</div>

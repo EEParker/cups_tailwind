@@ -1,0 +1,101 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+  <div class="card p-5">
+    <h2 class="text-base font-semibold mb-3">Printers</h2>
+    <div class="flex flex-wrap gap-2">
+      <form action="/admin/" method="POST">
+        <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+        <input type="hidden" name="OP" value="add-printer">
+        <input type="submit" class="btn btn-primary" value="Add printer">
+      </form>
+      <form action="/admin/" method="POST">
+        <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+        <input type="hidden" name="OP" value="find-new-printers">
+        <input type="submit" class="btn btn-ghost" value="Find new printers">
+      </form>
+      <form action="/printers/" method="GET">
+        <input type="submit" class="btn btn-ghost" value="Manage printers">
+      </form>
+      {have_samba?
+      <form action="/admin/" method="POST">
+        <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+        <input type="hidden" name="OP" value="export-samba">
+        <input type="submit" class="btn btn-ghost" value="Export to Samba">
+      </form>:}
+    </div>
+
+    <h2 class="text-base font-semibold mt-6 mb-3">Classes</h2>
+    <div class="flex flex-wrap gap-2">
+      <form action="/admin/" method="POST">
+        <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+        <input type="hidden" name="OP" value="add-class">
+        <input type="submit" class="btn btn-primary" value="Add class">
+      </form>
+      <form action="/classes/" method="GET">
+        <input type="submit" class="btn btn-ghost" value="Manage classes">
+      </form>
+    </div>
+
+    <h2 class="text-base font-semibold mt-6 mb-3">Jobs</h2>
+    <div class="flex flex-wrap gap-2">
+      <form action="/jobs/" method="GET">
+        <input type="submit" class="btn btn-ghost" value="Manage jobs">
+      </form>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <h2 class="text-base font-semibold mb-3">Server</h2>
+    <div class="flex flex-wrap gap-2 mb-5">
+      <form action="/admin/" method="POST">
+        <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+        <input type="hidden" name="OP" value="config-server">
+        <input type="submit" class="btn btn-ghost" value="Edit cupsd.conf">
+      </form>
+      <form action="/admin/log/access_log" method="GET"><input type="submit" class="btn btn-ghost" value="Access log"></form>
+      <form action="/admin/log/error_log"  method="GET"><input type="submit" class="btn btn-ghost" value="Error log"></form>
+      <form action="/admin/log/page_log"   method="GET"><input type="submit" class="btn btn-ghost" value="Page log"></form>
+    </div>
+
+    {SETTINGS_ERROR?
+    <div class="rounded-md p-3 mb-4 text-sm bg-(--color-danger-bg) text-(--color-danger)">
+      <div class="font-medium">{SETTINGS_MESSAGE}</div>
+      <pre class="mt-2 text-xs whitespace-pre-wrap">{SETTINGS_ERROR}</pre>
+    </div>:
+
+    <form method="POST" action="/admin" class="space-y-3">
+      <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-(--color-fg-muted)">Server settings</h3>
+
+      {ADVANCEDSETTINGS?
+      <input type="hidden" name="OP" value="config-server">
+      <input type="hidden" name="ADVANCEDSETTINGS" value="YES">
+      <p class="text-xs"><a href="/admin/">Hide advanced ▼</a></p>
+      <label class="flex items-center gap-2"><input type="checkbox" name="SHARE_PRINTERS" {?share_printers}> Share printers connected to this system</label>
+      <label class="flex items-center gap-2 ml-6 text-sm">Max clients&#58; <input type="text" name="MAX_CLIENTS" value="{?max_clients}" size="6"></label>
+      <label class="flex items-center gap-2 ml-6"><input type="checkbox" name="REMOTE_ANY" {?remote_any}> Allow printing from the Internet</label>
+      <label class="flex items-center gap-2 ml-6"><input type="checkbox" name="BROWSE_WEB_IF" {?browse_web_if}> Advertise web interface</label>
+      <label class="flex items-center gap-2"><input type="checkbox" name="REMOTE_ADMIN" {?remote_admin}> Allow remote administration</label>
+      {have_gssapi?<label class="flex items-center gap-2"><input type="checkbox" name="KERBEROS" {?kerberos}> Use Kerberos authentication (<a href="/help/kerberos.html?TOPIC=Getting+Started">FAQ</a>)</label>:}
+      <label class="flex items-center gap-2"><input type="checkbox" name="USER_CANCEL_ANY" {?user_cancel_any}> Allow users to cancel any job</label>
+      <label class="flex items-center gap-2"><input type="checkbox" name="PRESERVE_JOBS" {?preserve_jobs}> Preserve job history</label>
+      <label class="flex items-center gap-2 ml-6 text-sm">Max jobs (0 = unlimited)&#58; <input type="text" name="MAX_JOBS" value="{?max_jobs}" size="6"></label>
+      <label class="flex items-center gap-2 ml-6 text-sm">Retain metadata&#58; <input type="text" name="PRESERVE_JOB_HISTORY" value="{?preserve_job_history}" size="6"></label>
+      <label class="flex items-center gap-2 ml-6 text-sm">Retain documents&#58; <input type="text" name="PRESERVE_JOB_FILES" value="{?preserve_job_files}" size="6"></label>
+      <label class="flex items-center gap-2"><input type="checkbox" name="DEBUG_LOGGING" {?debug_logging}> Save debug info</label>
+      <label class="flex items-center gap-2 ml-6 text-sm">Max log size&#58; <input type="text" name="MAX_LOG_SIZE" value="{?max_log_size}" size="6"></label>
+      :
+      <p class="text-xs"><a href="/admin/?ADVANCEDSETTINGS=YES">Show advanced ▶</a></p>
+      <input type="hidden" name="OP" value="config-server">
+      <label class="flex items-center gap-2"><input type="checkbox" name="SHARE_PRINTERS" {?share_printers}> Share printers connected to this system</label>
+      <label class="flex items-center gap-2 ml-6"><input type="checkbox" name="REMOTE_ANY" {?remote_any}> Allow printing from the Internet</label>
+      <label class="flex items-center gap-2"><input type="checkbox" name="REMOTE_ADMIN" {?remote_admin}> Allow remote administration</label>
+      {have_gssapi?<label class="flex items-center gap-2"><input type="checkbox" name="KERBEROS" {?kerberos}> Use Kerberos authentication (<a href="/help/kerberos.html?TOPIC=Getting+Started">FAQ</a>)</label>:}
+      <label class="flex items-center gap-2"><input type="checkbox" name="USER_CANCEL_ANY" {?user_cancel_any}> Allow users to cancel any job</label>
+      <label class="flex items-center gap-2"><input type="checkbox" name="DEBUG_LOGGING" {?debug_logging}> Save debug info</label>
+      }
+      <div class="pt-2">
+        <input type="submit" class="btn btn-primary" name="CHANGESETTINGS" value="Change settings">
+      </div>
+    </form>}
+  </div>
+</div>

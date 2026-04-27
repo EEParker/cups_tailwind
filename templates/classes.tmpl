@@ -1,0 +1,38 @@
+{#printer_name=0?
+<div class="card p-8 text-center">
+  <div class="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-(--color-surface-2) text-(--color-fg-muted)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+  </div>
+  <div class="text-base font-medium">No classes defined</div>
+  <div class="mt-1 text-sm text-(--color-fg-muted)">Classes group printers for failover.</div>
+  <a href="/admin" class="btn btn-primary mt-4">Add a class</a>
+</div>:
+<div class="card overflow-x-auto">
+  <table class="table-clean" summary="Class List">
+    <thead>
+      <tr>
+        <th>Queue</th>
+        <th class="hidden sm:table-cell">Description</th>
+        <th class="hidden md:table-cell">Location</th>
+        <th class="hidden lg:table-cell">Members</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    {[printer_name]
+      <tr>
+        <td><a href="{printer_uri_supported}" class="font-medium">{printer_name}</a></td>
+        <td class="hidden sm:table-cell text-(--color-fg-muted)">{printer_info}</td>
+        <td class="hidden md:table-cell text-(--color-fg-muted)">{printer_location}</td>
+        <td class="hidden lg:table-cell text-(--color-fg-muted)">{?member_uris=?None:{member_uris}}</td>
+        <td>
+          {printer_state=3?<span class="pill pill-success">Idle</span>:}
+          {printer_state=4?<span class="pill pill-info">Processing</span>:}
+          {printer_state=5?<span class="pill pill-warning">Paused</span>:}
+          {printer_state_message?<span class="ml-2 text-xs text-(--color-fg-subtle)">{printer_state_message}</span>:}
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>}

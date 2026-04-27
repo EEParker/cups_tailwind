@@ -1,0 +1,34 @@
+<div class="flex items-center justify-between gap-2 mt-4">
+  <div class="flex gap-2">
+    {PREV?{PREV>0?
+    <form action="{THISURL}" method="GET" class="inline">
+      <input type="hidden" name="QUERY" value="{?QUERY}">
+      <input type="hidden" name="WHICH_JOBS" value="{?WHICH_JOBS}">
+      <input type="hidden" name="FIRST" value="0">
+      <input type="submit" class="btn btn-ghost" value="◀◀ First">
+    </form>:}
+    <form action="{THISURL}" method="GET" class="inline">
+      <input type="hidden" name="QUERY" value="{?QUERY}">
+      <input type="hidden" name="WHICH_JOBS" value="{?WHICH_JOBS}">
+      <input type="hidden" name="FIRST" value="{PREV}">
+      <input type="submit" class="btn btn-ghost" value="◀ Previous">
+    </form>:}
+  </div>
+  <div class="flex gap-2">
+    {NEXT?
+    <form action="{THISURL}" method="GET" class="inline">
+      <input type="hidden" name="QUERY" value="{?QUERY}">
+      <input type="hidden" name="ORDER" value="{?ORDER}">
+      <input type="hidden" name="WHICH_JOBS" value="{?WHICH_JOBS}">
+      <input type="hidden" name="FIRST" value="{NEXT}">
+      <input type="submit" class="btn btn-ghost" value="Next ▶">
+    </form>:}
+    {LAST?
+    <form action="{THISURL}" method="GET" class="inline">
+      <input type="hidden" name="QUERY" value="{?QUERY}">
+      <input type="hidden" name="WHICH_JOBS" value="{?WHICH_JOBS}">
+      <input type="hidden" name="FIRST" value="{LAST}">
+      <input type="submit" class="btn btn-ghost" value="Last ▶▶">
+    </form>:}
+  </div>
+</div>

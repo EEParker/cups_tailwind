@@ -1,0 +1,34 @@
+<div class="card p-6 max-w-2xl">
+  <h2 class="text-base font-semibold mb-4">Modify <span class="font-mono">{printer_name}</span></h2>
+  <form method="POST" action="/admin" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="{op}">
+    <input type="hidden" name="BAUDRATE" value="{?baudrate}">
+    <input type="hidden" name="BITS" value="{?bits}">
+    <input type="hidden" name="PARITY" value="{?parity}">
+    <input type="hidden" name="FLOW" value="{?flow}">
+    <input type="hidden" name="PRINTER_name" value="{printer_name}">
+
+    <div>
+      <label for="PRINTER_INFO" class="block text-sm font-medium mb-1">Description</label>
+      <input type="text" id="PRINTER_INFO" name="PRINTER_INFO" value="{?printer_info}" maxlength="127" class="w-full">
+      <p class="text-xs mt-1 text-(--color-fg-subtle)">Human-readable, e.g. "HP LaserJet with Duplexer".</p>
+    </div>
+    <div>
+      <label for="PRINTER_LOCATION" class="block text-sm font-medium mb-1">Location</label>
+      <input type="text" id="PRINTER_LOCATION" name="PRINTER_LOCATION" value="{?printer_location}" maxlength="127" class="w-full">
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Connection</label>
+      <input type="hidden" id="DEVICE_URI" name="DEVICE_URI" value="{device_uri}">
+      <div class="font-mono text-xs p-3 rounded-md break-all bg-(--color-surface-2) border border-(--color-border)">{device_uri}</div>
+    </div>
+    <div>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" id="PRINTER_IS_SHARED" name="PRINTER_IS_SHARED" {PRINTER_IS_SHARED=1?CHECKED:}>
+        Share this printer
+      </label>
+    </div>
+    <div class="pt-2"><input type="submit" class="btn btn-primary" value="Continue"></div>
+  </form>
+</div>

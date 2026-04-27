@@ -1,0 +1,19 @@
+<div class="card p-6 max-w-2xl">
+  <h2 class="text-base font-semibold mb-4">Allowed users for <span class="font-mono">{printer_name}</span></h2>
+  <form method="POST" action="/admin" class="space-y-4">
+    <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+    <input type="hidden" name="OP" value="{OP}">
+    <input type="hidden" name="PRINTER_NAME" value="{printer_name}">
+    {IS_CLASS?<input type="hidden" name="IS_CLASS" value="{IS_CLASS}">:}
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Users</label>
+      <input type="text" name="users" value="{?requesting_user_name_allowed}{?requesting_user_name_denied}" class="w-full">
+    </div>
+    <div class="space-y-1.5 text-sm">
+      <label class="flex items-center gap-2"><input type="radio" name="type" value="requesting-user-name-allowed" {requesting_user_name_allowed?checked:}> Allow these users to print</label>
+      <label class="flex items-center gap-2"><input type="radio" name="type" value="requesting-user-name-denied" {requesting_user_name_denied?checked:}> Prevent these users from printing</label>
+    </div>
+    <div class="pt-2"><input type="submit" class="btn btn-primary" value="Set allowed users"></div>
+  </form>
+</div>

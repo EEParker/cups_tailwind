@@ -1,0 +1,47 @@
+<h2 class="text-base font-semibold mb-4">{op=modify-printer?Modify {printer_name}:Add printer}</h2>
+
+<form method="POST" action="/admin" enctype="multipart/form-data" class="card p-6 space-y-4 max-w-2xl">
+  <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+  <input type="hidden" name="OP" value="{op}">
+  {printer_name?<input type="hidden" name="printer_name" value="{printer_name}">:}
+  <input type="hidden" name="BAUDRATE" value="{?baudrate}">
+  <input type="hidden" name="BITS" value="{?bits}">
+  <input type="hidden" name="PARITY" value="{?parity}">
+  <input type="hidden" name="FLOW" value="{?flow}">
+
+  <dl class="grid grid-cols-[8rem_1fr] gap-y-2 text-sm">
+    {op=modify-printer?:
+    <dt class="font-medium">Name</dt>
+    <dd><input type="hidden" name="PRINTER_NAME" value="{printer_name}">{printer_name}</dd>}
+    <dt class="font-medium">Description</dt>
+    <dd><input type="hidden" name="PRINTER_INFO" value="{printer_info}">{printer_info}</dd>
+    <dt class="font-medium">Location</dt>
+    <dd><input type="hidden" name="PRINTER_LOCATION" value="{printer_location}">{printer_location}</dd>
+    <dt class="font-medium">Connection</dt>
+    <dd class="font-mono text-xs break-all"><input type="hidden" name="DEVICE_URI" value="{device_uri}">{device_uri}</dd>
+    <dt class="font-medium">Sharing</dt>
+    <dd>
+      <input type="hidden" name="PRINTER_IS_SHARED" value="{?printer_is_shared}">
+      {?printer_is_shared=?Do not:{?printer_is_shared=0?Do not:}} share this printer
+    </dd>
+  </dl>
+
+  <div>
+    <label class="block text-sm font-medium mb-1">Make</label>
+    <select name="PPD_MAKE" size="10" class="w-full">
+      {[ppd_make]<option value="{ppd_make}" {?current_make={ppd_make}?selected:}>{ppd_make}}
+    </select>
+  </div>
+
+  <div><input type="submit" class="btn btn-primary" value="Continue"></div>
+
+  <hr>
+
+  <div>
+    <label for="PPD_FILE" class="block text-sm font-medium mb-1">Or provide a PPD file</label>
+    <input type="hidden" name="MAX_FILE_SIZE" value="262144">
+    <input type="file" id="PPD_FILE" name="PPD_FILE" class="w-full">
+  </div>
+
+  <div><input type="submit" class="btn btn-primary" value="{op=add-printer?Add printer:Modify printer}"></div>
+</form>

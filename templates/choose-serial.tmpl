@@ -1,0 +1,48 @@
+<h2 class="text-base font-semibold mb-4">{op=modify-printer?Modify {printer_name}:Add printer}</h2>
+
+<form method="POST" action="/admin" class="card p-6 max-w-xl space-y-4">
+  <input type="hidden" name="org.cups.sid" value="{$org.cups.sid}">
+  <input type="hidden" name="OP" value="{op}">
+  {printer_name?<input type="hidden" name="printer_name" value="{printer_name}">:}
+
+  <div>
+    <label class="block text-sm font-medium mb-1">Connection</label>
+    <input type="hidden" name="DEVICE_URI" value="{device_uri}">
+    <div class="font-mono text-xs p-3 rounded-md break-all bg-(--color-surface-2) border border-(--color-border)">{device_uri}</div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Baud rate</label>
+      <select name="BAUDRATE" class="w-full">
+        {[baudrates]<option {?baudrate={baudrates}?selected:}>{baudrates}}
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Parity</label>
+      <select name="PARITY" class="w-full">
+        <option value="none" {?parity=none?selected:}>None</option>
+        <option value="even" {?parity=even?selected:}>Even</option>
+        <option value="odd"  {?parity=odd?selected:}>Odd</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Data bits</label>
+      <select name="BITS" class="w-full">
+        <option {?bits=8?selected:}>8</option>
+        <option {?bits=7?selected:}>7</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Flow control</label>
+      <select name="FLOW" class="w-full">
+        <option value="none"   {?flow=none?selected:}>None</option>
+        <option value="soft"   {?flow=soft?selected:}>XON/XOFF (Software)</option>
+        <option value="hard"   {?flow=hard?selected:}>RTS/CTS (Hardware)</option>
+        <option value="dtrdsr" {?flow=dtrdsr?selected:}>DTR/DSR (Hardware)</option>
+      </select>
+    </div>
+  </div>
+
+  <div><input type="submit" class="btn btn-primary" value="Continue"></div>
+</form>
