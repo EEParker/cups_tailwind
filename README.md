@@ -21,6 +21,17 @@
 - Syntax-highlighted `cupsd.conf` editor (CodeMirror 6, custom mode)
 - Reversible install — `uninstall.sh` restores the original upstream files
 
+## Quick install
+
+```bash
+# On the CUPS host:
+curl -sSL https://github.com/<owner>/cups_tailwind/releases/latest/download/cups_tailwind.tar.gz | tar -xz
+cd cups_tailwind
+sudo bash install.sh
+```
+
+To uninstall: `sudo bash uninstall.sh`. See [Install](#install) below for clone-and-build instructions and the full list of host changes.
+
 ## Screenshots
 
 **Home** — landing with quick links into Printers / Jobs / Classes / Admin
@@ -48,14 +59,9 @@
 
 ## Install
 
-### Quick (release tarball, recommended)
-
-```bash
-# On the CUPS host:
-curl -sSL https://github.com/<owner>/cups_tailwind/releases/latest/download/cups_tailwind.tar.gz | tar -xz
-cd cups_tailwind
-sudo bash install.sh
-```
+For most users the [Quick install](#quick-install) above is enough. The
+sections below cover the from-source path and what `install.sh` actually
+does on the host.
 
 ### Manual (clone + build)
 
