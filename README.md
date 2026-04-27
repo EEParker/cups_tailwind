@@ -21,6 +21,31 @@
 - Syntax-highlighted `cupsd.conf` editor (CodeMirror 6, custom mode)
 - Reversible install — `uninstall.sh` restores the original upstream files
 
+## Screenshots
+
+**Home** — landing with quick links into Printers / Jobs / Classes / Admin
+
+![Home](docs/images/home.png)
+
+**Admin** — printer / class / job actions + server settings panel
+
+![Admin](docs/images/admin.png)
+
+**Edit `cupsd.conf`** — CodeMirror 6 with custom syntax highlighting (block tags, directives, `@LOCAL`/`@SYSTEM` groups, paths, comments)
+
+![cupsd.conf editor with syntax highlighting](docs/images/admin_config.png)
+
+**Theme picker** at `/themes.html` — seven primary-color presets and three card-hover border styles, persisted to `localStorage`
+
+![Theme picker](docs/images/theme.png)
+
+**Printer detail** — single-printer page with status pills and inline maintenance / administration menus. Tables hide low-priority columns on small screens.
+
+<p>
+  <img src="docs/images/printers.png"        alt="Printer detail (desktop)" width="62%">
+  <img src="docs/images/printers-mobile.png" alt="Printer detail (mobile)"  width="33%">
+</p>
+
 ## Install
 
 ### Quick (release tarball, recommended)
