@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="cups_tailwind.png" alt="cups_tailwind logo" width="200">
+  <img src="cups_social.png" alt="cups_tailwind" width="640">
 </p>
 
 <h1 align="center">cups_tailwind</h1>
