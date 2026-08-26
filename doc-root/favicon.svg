@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_x32_" width="512" height="512" fill="#ffffff" stroke="#ffffff" stroke-width=".00512" version="1.1" viewBox="-51.2 -51.2 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+  <g transform="matrix(.64 0 0 .64 -18.432 -18.432)"><rect x="-51.2" y="-51.2" width="800" height="800" ry=".18" fill="none" stroke="none"/><g id="iconCarrier" transform="matrix(1.3021 0 0 1.3021 15.467 15.467)">
+    <style type="text/css"> .st0{fill:#ffffff;} </style>
+    <path class="st0" d="m105.04 367.93-0.24 1e-3v80.383c0 8.592 6.967 15.556 15.559 15.556h271.29c8.592 0 15.559-6.965 15.559-15.556v-80.383h-300.93z"/>
+    <rect class="st0" x="136.2" y="108.76" width="239.18" height="15.99"/>
+    <polygon class="st0" points="136.44 156.73 136.2 156.73 136.2 173.39 375.38 173.39 375.38 156.73 137.42 156.73"/>
+    <path class="st0" d="m431.85 207.96v-159.82h-350.01l-1.442-1e-3v1e-3h-0.24v159.82h-80.154v191.95h80.277v-63.959h350.24l1.201 1e-3v63.958h80.278v-191.95h-80.154zm-255.85 60.177c0 11.045-8.953 20-20 20s-20-8.955-20-20c0-11.047 8.953-20 20-20s20 8.953 20 20zm-64 0c0 11.045-8.953 20-20 20s-20-8.955-20-20c0-11.047 8.953-20 20-20s20 8.953 20 20zm0.135-63.434v-124.58h287.73v124.59h-286.79l-0.939-1e-3z"/>
+  </g></g>
+</svg>
